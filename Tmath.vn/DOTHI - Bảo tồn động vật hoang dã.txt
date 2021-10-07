@@ -1,0 +1,54 @@
+#include<bits/stdc++.h>
+#include <vector>
+#define ll long long
+#define fo(i,a,b) for(ll i=a;i<=b;i++)
+#define fod(i,a,b) for(ll i=b;i>=a;i--)
+using namespace std;
+ll n,m,s,t,f[100005],d[100005],kq=-1,dem=0;
+vector<int>a[100005];
+void DFS(ll u,ll w)
+{
+    d[u]=1;
+    for(ll i=0;i<a[u].size();i++)
+    {
+        ll v=a[u][i];
+        if(abs(f[u]-f[v])<=w)
+            if(d[v]==0)
+            DFS(v,w);
+    }
+}
+bool check(ll w)
+{
+    fo(i,1,n)
+    d[i]=0;
+    DFS(s,w);
+    if(d[t]==1) return true;
+    return false;
+}
+int main()
+{
+    ios::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
+    cin>>n>>m>>s>>t;
+    fo(i,1,n)
+    cin>>f[i];
+    fo(i,1,m)
+    {
+        ll u,v;
+        cin>>u>>v;
+        a[u].push_back(v);
+        a[v].push_back(u);
+    }
+    ll dau=0,cuoi=100005;
+    while(dau<=cuoi)
+    {
+        ll giua=(dau+cuoi)/2;
+        if(check(giua))
+        {
+            kq=giua;
+            cuoi=giua-1;
+        }
+        else dau=giua+1;
+    }
+    cout<<kq;
+}

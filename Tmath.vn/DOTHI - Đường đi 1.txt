@@ -1,0 +1,94 @@
+#include <bits/stdc++.h>
+#define fo(i, a, b) for (int i = a; i <= b; i++)
+#define ll long long
+#define nmax 100000
+#define ii pair<ll, ll>
+#define fi first
+#define se second
+const ll mod = 1e9 + 7;
+using namespace std;
+int n , m , x , s , t , y, d[nmax+5] , a[nmax+5];
+vector<int> g[nmax+5];
+int maxx = 0 , k = 0, zz = 0 ,kq[nmax+5];
+void DFS(int u)
+{
+    d[u] = 1;
+    for ( auto gt : g[u] )
+    {
+        if ( d[gt] == 0 )
+            DFS(gt);
+    }
+}
+void BFS(int u)
+{
+    queue<int>di;
+    di.push(u);
+    while ( !di.empty() )
+    {
+        int top = di.front();
+        d[top] = 1;
+        di.pop();
+        sort(g[top].begin(),g[top].end());
+        for (auto gt : g[top])
+        {
+            if ( d[gt] == 1 )
+            {
+                di.push(gt);
+                a[gt] = top;
+            }
+        }
+    }
+}
+void DFS1(int u)
+{
+    d[u] = 0;
+    sort(g[u].begin(),g[u].end());
+    for ( auto gt : g[u] )
+    {
+        if ( d[gt] == 1 )
+        {
+            a[gt] = u;
+            if ( gt == t )
+            {
+                int dinh = t ,sl = 0;
+                while ( dinh != s )
+                {
+                    kq[++sl] = dinh;
+                    dinh = a[dinh];
+                    if ( dinh == s ) kq[++sl] = s;
+                }
+                for (int i = sl; i >= 1; i--)
+                    cout << kq[i] <<" ";
+                exit(0);
+            }
+            DFS1(gt);
+        }
+    }
+}
+int main()
+{
+          #ifndef ONLINE_JUDGE
+    freopen("l.inp","r",stdin);
+    freopen("l.out","w",stdout);
+        #endif // ONLINE_JUDGE
+    cin >> n >> m >> s >> t;
+    for (int i = 1; i <= m; i++)
+    {
+        cin >> x >> y;
+        g[x].push_back(y);
+        g[y].push_back(x);
+    }
+    DFS(s);
+    int kt = 0;
+    for (int i = 1; i <= n; i++)
+        if ( d[i] == 1 )
+        {
+            if ( i == t )
+            {
+                kt = 1;
+                break;
+            }
+        }
+    if ( kt == 0 ) { cout << -1; return 0; }
+    DFS1(s);
+}
