@@ -8,7 +8,34 @@
 #define ii pair<int, int>
 const ll mod = 1e9 + 7;
 using namespace std;
-ll l, r, minn = 1e9;
+ll a, b, t;
+bool can(int x)
+{
+    if (int(sqrt(x)) * int(sqrt(x)) == x)
+        return true;
+    else
+        return false;
+}
+ll chuso(ll x)
+{
+    int dem = 0;
+    while (x > 0)
+    {
+        dem++;
+        x /= 10;
+    }
+    return dem;
+}
+ll mu(ll a, ll b)
+{
+    if (b == 0)
+        return 1;
+    ll tam = mu(a, b / 2);
+    tam = tam * tam;
+    if (b % 2 == 1)
+        tam = tam * a;
+    return tam;
+}
 int main()
 {
     ios::sync_with_stdio(0);
@@ -18,18 +45,9 @@ int main()
     freopen("LES28C.inp", "r", stdin);
     freopen("LES28C.out", "w", stdout);
 #endif // ONLINE_JUDGE
-    cin >> l >> r;
-    if (r - l >= 2018)
-        cout << 0;
+    cin >> a >> b;
+    if (can(a * mu(10, chuso(b)) + b))
+        cout << "Yes";
     else
-    {
-        fo(i, l, r)
-        {
-            fo(j, i + 1, r)
-            {
-                minn = min(minn, i * j % 2019);
-            }
-        }
-        cout << minn;
-    }
+        cout << "No";
 }

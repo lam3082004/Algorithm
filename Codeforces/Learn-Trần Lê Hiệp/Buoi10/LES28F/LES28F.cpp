@@ -7,38 +7,58 @@
 #define ii pair<int, int>
 const ll mod = 1e9 + 7;
 using namespace std;
-ll a, b;
-ll gt(ll x)
-{
-    ll s = 1;
-    fo(i, 1, x)
-        s = (s * i) % mod;
-    return s;
-}
-ll mu(ll a, ll b)
-{
-    if (b == 0)
-        return 1;
-    ll tam = mu(a, b / 2);
-    tam = (tam * tam) % mod;
-    if (b % 2 == 1)
-        tam = (tam * a) % mod;
-    return tam;
-}
+string a, b;
+int n, m, z = -1, dem = 0;
 int main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
 #ifndef ONLINE_JUDGE
-    freopen("LES21F.inp", "r", stdin);
-    freopen("LES21F.out", "w", stdout);
+    freopen("LES28F.inp", "r", stdin);
+    freopen("LES28F.out", "w", stdout);
 #endif // ONLINE_JUDGE
     cin >> a >> b;
-    ll k = b;
-    ll n = a + b - 1;
-    ll x = gt(n) % mod;
-    ll y = mu(gt(k), mod - 2) % mod;
-    ll z = mu(gt(n - k), mod - 2) % mod;
-    cout << (((x * y) % mod) * z) % mod;
+    n = a.size() - 1;
+    m = b.size() - 1;
+    int i = 0, j = 0;
+    while (i <= n + 1 && j <= m + 1)
+    {
+        if (a[i] != b[j])
+            j++;
+        if (j == m)
+            break;
+        if (i == n - 1)
+        {
+            i = 0;
+            dem++;
+        }
+        i++;
+        // if (dem == 1 && j == 0)
+        // {
+        //     cout << -1;
+        //     return 0;
+        // }
+    }
+    // dem = (dem + 1) * (n + 1);
+    // cout << dem << ' ' << a[4] << ' ' << b[m] << ' ';
+    fo(k, 0, n)
+    {
+        if (a[k] == b[m])
+        {
+            z = k;
+            break;
+        }
+    }
+    z++;
+    cout << i << ' ' << z << ' ' << dem << ' ';
+    if (z == -1)
+        cout << -1;
+    else
+    {
+        if (z <= i)
+            cout << (dem + 1) * (n + 1) + i - z + 1;
+        else
+            cout << dem * (n + 1) + z;
+    }
 }

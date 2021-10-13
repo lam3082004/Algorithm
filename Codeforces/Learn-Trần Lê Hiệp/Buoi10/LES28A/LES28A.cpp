@@ -7,7 +7,7 @@
 #define ii pair<int, int>
 const ll mod = 1e9 + 7;
 using namespace std;
-string s;
+string a, b;
 ll dem = 0;
 int main()
 {
@@ -18,17 +18,11 @@ int main()
     freopen("LES28A.inp", "r", stdin);
     freopen("LES28A.out", "w", stdout);
 #endif // ONLINE_JUDGE
-    cin >> s;
-    sort(s.begin(), s.end());
-    fo(i, 0, s.size() - 2)
+    cin >> a >> b;
+    fo(i, 0, a.size() - 1)
     {
-        if (s[i] != s[i + 1])
-        {
+        if (a[i] == b[i])
             dem++;
-        }
     }
-    if (dem == 1)
-        cout << "YES";
-    else
-        cout << "NO";
+    cout << dem;
 }

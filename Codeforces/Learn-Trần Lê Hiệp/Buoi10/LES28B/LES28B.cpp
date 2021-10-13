@@ -7,28 +7,34 @@
 #define ii pair<int, int>
 const ll mod = 1e9 + 7;
 using namespace std;
-ll n, a[nmax], dem = 0, b[6];
+ll a, b;
 int main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
 #ifndef ONLINE_JUDGE
-    freopen("LES28A.inp", "r", stdin);
+    freopen("LES28B.inp", "r", stdin);
     freopen("LES28B.out", "w", stdout);
 #endif // ONLINE_JUDGE
-    cin >> n;
-    fo(i, 1, n) cin >> a[i];
-    fo(i, 3, n - 2)
+    cin >> a >> b;
+    if (b == 1)
+        cout << 0;
+    else
     {
-        b[1] = a[i - 2];
-        b[2] = a[i - 1];
-        b[3] = a[i];
-        b[4] = a[i + 1];
-        b[5] = a[i + 2];
-        sort(b + 1, b + 6);
-        if (b[3] == a[i])
-            dem++;
+        if (a >= b)
+            cout << 1;
+        else
+        {
+            if ((b - a) % (a - 1) == 0)
+                cout << (b - a) / (a - 1) + 1;
+            else
+            {
+                if (b % (a - 1) == 0)
+                    cout << b / (a - 1);
+                else
+                    cout << b / (a - 1) + 1;
+            }
+        }
     }
-    cout << dem;
 }

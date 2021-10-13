@@ -10,9 +10,8 @@
 #define bit(x, i) (((x) >> (i)) & 1)
 using namespace std;
 const int MOD = 998244353;
-const int N = 2e5 + 5;
-ll n, x, a[N];
-ll dp0[N], dp1[N], dp2[N];
+const int nmax = 2e5 + 5;
+long long n, f[nmax];
 int main()
 {
 #ifndef ONLINE_JUDGE
@@ -22,29 +21,10 @@ int main()
     ios::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
-    cin >> n >> x;
-    fo(i, 1, n)
-            cin >>
-        a[i];
-    dp0[0] = dp1[0] = dp2[0] = -1e12;
-    ll ans = -1e12;
-    fo(i, 1, n)
-    {
-        dp0[i] = max(dp0[i - 1] + a[i], a[i]);
-        ll res = max(dp0[i - 1], dp1[i - 1]);
-        dp1[i] = max(res + a[i] * x, a[i] * x);
-        dp2[i] = max(dp1[i - 1], dp2[i - 1]) + a[i];
-        ans = max({ans, dp0[i], dp1[i], dp2[i]});
-        cout << dp0[i] << ' ';
-    }
-    cout << '\n';
-    fo(i, 1, n)
-    {
-        cout << dp1[i] << ' ';
-    }
-    cout << '\n';
-    fo(i, 1, n)
-    {
-        cout << dp2[i] << ' ';
-    }
+    cin >> n;
+    f[1] = 1;
+    f[2] = 1;
+    fo(i, 3, 80)
+        f[i] = f[i - 1] + f[i - 2];
+    fo(i, 1, 80) cout << f[i] << ' ';
 }
