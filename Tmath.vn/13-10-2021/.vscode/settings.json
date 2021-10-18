@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.js": "javascript",
+        "*.tsx": "typescript",
+        "iosfwd": "cpp",
+        "iostream": "cpp"
+    }
+}

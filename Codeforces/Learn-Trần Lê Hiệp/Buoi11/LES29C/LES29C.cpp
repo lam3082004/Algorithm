@@ -8,28 +8,37 @@
 #define ii pair<int, int>
 const ll mod = 1e9 + 7;
 using namespace std;
-ll l, r, minn = 1e9;
+string s;
 int main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
 #ifndef ONLINE_JUDGE
-    freopen("LES28C.inp", "r", stdin);
-    freopen("LES28C.out", "w", stdout);
+    freopen("LES29C.inp", "r", stdin);
+    freopen("LES29C.out", "w", stdout);
 #endif // ONLINE_JUDGE
-    cin >> l >> r;
-    if (r - l >= 2018)
-        cout << 0;
-    else
+    cin >> s;
+    int i = 0;
+    while (i <= s.size() - 1)
     {
-        fo(i, l, r)
+        if (i % 2 == 0)
         {
-            fo(j, i + 1, r)
-            {
-                minn = min(minn, i * j % 2019);
-            }
+            if (s[i] == 'R' || s[i] == 'U' || s[i] == 'D')
+                i++;
+            else
+                break;
         }
-        cout << minn;
+        else
+        {
+            if (s[i] == 'L' || s[i] == 'U' || s[i] == 'D')
+                i++;
+            else
+                break;
+        }
     }
+    if (i == s.size())
+        cout << "Yes";
+    else
+        cout << "No";
 }

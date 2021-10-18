@@ -4,7 +4,7 @@ import math
 
 class Myclass():
 
-    def method5(self, a, b):
+    def method1(self, a, b):
         a = list(map(int, input().split()))
 
         x = list()
@@ -38,7 +38,7 @@ def main():
     c = Myclass()
     a, b = map(int, input().split())
     # n = map(int, input().split())
-    c.method5(a, b)
+    c.method1(a, b)
     # c.method5(n)
 
 

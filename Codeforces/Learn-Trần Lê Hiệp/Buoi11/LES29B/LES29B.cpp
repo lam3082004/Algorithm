@@ -7,7 +7,7 @@
 #define ii pair<int, int>
 const ll mod = 1e9 + 7;
 using namespace std;
-ll n, a[nmax], dem = 0, b[6];
+ll n, a[nmax], b[nmax], c[nmax], s = 0;
 int main()
 {
     ios::sync_with_stdio(0);
@@ -19,16 +19,13 @@ int main()
 #endif // ONLINE_JUDGE
     cin >> n;
     fo(i, 1, n) cin >> a[i];
-    fo(i, 3, n - 2)
+    fo(i, 1, n) cin >> b[i];
+    fo(i, 1, n - 1) cin >> c[i];
+    fo(i, 1, n)
     {
-        b[1] = a[i - 2];
-        b[2] = a[i - 1];
-        b[3] = a[i];
-        b[4] = a[i + 1];
-        b[5] = a[i + 2];
-        sort(b + 1, b + 6);
-        if (b[3] == a[i])
-            dem++;
+        s += b[a[i]];
+        if (a[i + 1] == a[i] + 1)
+            s += c[a[i]];
     }
-    cout << dem;
+    cout << s;
 }

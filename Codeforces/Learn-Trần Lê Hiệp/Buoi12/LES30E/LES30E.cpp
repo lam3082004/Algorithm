@@ -1,23 +1,23 @@
 #include <bits/stdc++.h>
 #define ll long long
 #define fo(i, a, b) for (long long i = a; i <= b; i++)
-#define nmax 1005
+#define nmax 100005
 #define fi first
 #define se second
 #define ii pair<int, int>
 const ll mod = 1e9 + 7;
 using namespace std;
-int n, m, x, y, dem = 0;
-char a[1005][1005];
-bool check[1005][1005];
-queue<ii> q;
-string s;
-void bfs(int i, int j)
+ll a, b, x[nmax], y[nmax], dem = 0, x1 = 0;
+bool nt(ll x)
 {
-    if (i <= 0 || i > n || j <= 0 || j > m || check[i][j] || a[i][j] == '#')
-        return;
-    q.push({i, j});
-    check[i][j] = 1;
+    if (x < 2)
+        return false;
+    fo(i, 2, sqrt(x))
+    {
+        if (x % i == 0)
+            return false;
+    }
+    return true;
 }
 int main()
 {
@@ -28,33 +28,29 @@ int main()
     freopen("LES30E.inp", "r", stdin);
     freopen("LES30E.out", "w", stdout);
 #endif // ONLINE_JUDGE
-    cin >> n >> m;
-    fo(i, 1, n)
+    cin >> a >> b;
+    fo(i, 2, sqrt(a))
     {
-        cin >> s;
-        fo(j, 0, m - 1) a[i][j + 1] = s[j];
-    }
-    fo(i, 1, n)
-    {
-        fo(j, 1, m)
+        if (a % i == 0)
         {
-            if (a[i][j] == '.' && check[i][j] == false)
+            if (nt(i))
             {
-                dem++;
-                q.push({i, j});
-                check[i][j] = 1;
-                while (!q.empty())
-                {
-                    x = q.front().fi;
-                    y = q.front().se;
-                    q.pop();
-                    bfs(x + 1, y);
-                    bfs(x, y + 1);
-                    bfs(x - 1, y);
-                    bfs(x, y - 1);
-                }
+                if (i * i == a)
+                    x[++x1] = i;
+                x[++x1] = i;
             }
+            if (nt(a / i))
+                x[++x1] = a / i;
         }
+    }
+    x[++x1] = 1;
+    if (nt(a))
+        x[++x1] = a;
+    fo(i, 1, x1)
+    {
+        if (b % x[i] == 0)
+            dem++;
+        // cout << x[i] << ' ';
     }
     cout << dem;
 }

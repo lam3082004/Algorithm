@@ -7,18 +7,7 @@
 #define ii pair<int, int>
 const ll mod = 1e9 + 7;
 using namespace std;
-int n, m, x, y, dem = 0;
-char a[1005][1005];
-bool check[1005][1005];
-queue<ii> q;
-string s;
-void bfs(int i, int j)
-{
-    if (i <= 0 || i > n || j <= 0 || j > m || check[i][j] || a[i][j] == '#')
-        return;
-    q.push({i, j});
-    check[i][j] = 1;
-}
+ll n, k, f[2005][2005];
 int main()
 {
     ios::sync_with_stdio(0);
@@ -28,33 +17,11 @@ int main()
     freopen("LES29E.inp", "r", stdin);
     freopen("LES29E.out", "w", stdout);
 #endif // ONLINE_JUDGE
-    cin >> n >> m;
+    cin >> n >> k;
+    fo(i, 0, n) f[i][0] = 1;
     fo(i, 1, n)
-    {
-        cin >> s;
-        fo(j, 0, m - 1) a[i][j + 1] = s[j];
-    }
-    fo(i, 1, n)
-    {
-        fo(j, 1, m)
-        {
-            if (a[i][j] == '.' && check[i][j] == false)
-            {
-                dem++;
-                q.push({i, j});
-                check[i][j] = 1;
-                while (!q.empty())
-                {
-                    x = q.front().fi;
-                    y = q.front().se;
-                    q.pop();
-                    bfs(x + 1, y);
-                    bfs(x, y + 1);
-                    bfs(x - 1, y);
-                    bfs(x, y - 1);
-                }
-            }
-        }
-    }
-    cout << dem;
+        fo(j, 1, i)(f[i][j] += f[i - 1][j - 1] + f[i - 1][j]) %= mod;
+    fo(i, 1, k)
+            cout
+        << (f[k - 1][i - 1] * f[n - k + 1][i]) % mod << '\n';
 }

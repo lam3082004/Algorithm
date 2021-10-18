@@ -1,0 +1,37 @@
+import math
+
+
+def nguyento(n):
+    if (n < 2):
+        return False
+    for i in range(2, int(math.sqrt(n)) + 1):
+        if (n % i == 0):
+            return False
+    return True
+
+
+def lam(a):
+    s = int(0)
+    for i in range(1, int(math.sqrt(a))+1):
+        if a % i == 0:
+            s = s+i+a/i
+        if i*i == a:
+            s = s-i
+    return int(s)
+
+
+def cs(x):
+    s = int(0)
+    for i in x:
+        s = s+ord(i)-48
+    return s
+
+
+# Start
+if __name__ == '__main__':
+    n = int(input())
+    s = int(0)
+    a = list(map(int, input().split()))
+    a.sort()
+    s = int(abs(a[0]+a[1]))
+    print(s)
