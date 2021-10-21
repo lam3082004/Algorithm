@@ -1,60 +1,75 @@
-#include <bits/stdc++.h>
-#define ll long long
-#define fo(i, a, b) for (long long i = a; i <= b; i++)
-#define nmax 1005
+#include <algorithm>
+#include <bitset>
+#include <cctype>
+#include <cfloat>
+#include <climits>
+#include <cmath>
+#include <complex>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <ctime>
+#include <deque>
+#include <functional>
+#include <iostream>
+#include <list>
+#include <map>
+#include <numeric>
+#include <queue>
+#include <set>
+#include <stack>
+#include <string>
+#include <utility>
+#include <vector>
+using namespace std;
+
+typedef pair<int, int> ii;
+typedef vector<ii> vii;
+typedef vector<vii> vvii;
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+
+#define sz(a) int((a).size())
 #define fi first
 #define se second
-#define ii pair<int, int>
-const ll mod = 1e9 + 7;
-using namespace std;
-int n, m, x, y, dem = 0;
-char a[1005][1005];
-bool check[1005][1005];
-queue<ii> q;
-string s;
-void bfs(int i, int j)
-{
-    if (i <= 0 || i > n || j <= 0 || j > m || check[i][j] || a[i][j] == '#')
-        return;
-    q.push({i, j});
-    check[i][j] = 1;
-}
+#define pb push_back
+#define mp make_pair
+#define all(c) (c).begin(), (c).end()
+#define tr(c, i) for (typeof((c).begin()) i = (c).begin(), _e = (c).end(); it != _e; ++it)
+#define present(c, x) ((c).find(x) != (c).end())
+#define cpresent(c, x) (find(all(c), x) != (c).end())
+#define rep(i, n) for (int i = 0, _n = (n); i < _n; ++i)
+#define repd(i, n) for (int i = (n)-1; i >= 0; --i)
+#define fo(i, a, b) for (int i = (a), _b = (b); i <= _b; ++i)
+#define fod(i, a, b) for (int i = (a), _b = (b); i >= _b; --i)
+
+#define INF 1000000000
+#define N 10005
+
+int a[4][N], n, f[N][11];
+int sts[] = {0, 1, 2, 4, 5, 8, 9, 10};
+
 int main()
 {
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    cout.tie(0);
-#ifndef ONLINE_JUDGE
-    freopen("LES31E.inp", "r", stdin);
-    freopen("LES31E.out", "w", stdout);
-#endif // ONLINE_JUDGE
-    cin >> n >> m;
-    fo(i, 1, n)
+    // freopen( "input.txt", "r", stdin );
+    // freopen( "output.txt", "w", stdout );
+    scanf("%d", &n);
+    rep(i, 4) fo(j, 1, n) scanf("%d", &a[i][j]);
+    fo(j, 1, n)
     {
-        cin >> s;
-        fo(j, 0, m - 1) a[i][j + 1] = s[j];
-    }
-    fo(i, 1, n)
-    {
-        fo(j, 1, m)
+        rep(st, 8)
         {
-            if (a[i][j] == '.' && check[i][j] == false)
-            {
-                dem++;
-                q.push({i, j});
-                check[i][j] = 1;
-                while (!q.empty())
-                {
-                    x = q.front().fi;
-                    y = q.front().se;
-                    q.pop();
-                    bfs(x + 1, y);
-                    bfs(x, y + 1);
-                    bfs(x - 1, y);
-                    bfs(x, y - 1);
-                }
-            }
+            rep(i, 4) if (sts[st] & (1 << i)) f[j][sts[st]] += a[i][j];
+            int mx = INT_MIN;
+            rep(st2, 8) if ((sts[st] | sts[st2]) == (sts[st] ^ sts[st2]))
+                mx = max(f[j - 1][sts[st2]], mx);
+            f[j][sts[st]] += mx;
         }
     }
-    cout << dem;
+    int mx = INT_MIN;
+    rep(st, 8) mx = max(f[n][sts[st]], mx);
+    int mx2 = INT_MIN;
+    rep(i, 4) fo(j, 1, n) mx2 = max(mx2, a[i][j]);
+    printf("%d\n", mx2 < 0 ? mx2 : mx);
+    return 0;
 }

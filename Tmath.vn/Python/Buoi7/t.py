@@ -29,10 +29,9 @@ def cs(x):
 
 # Start
 if __name__ == '__main__':
-    # n, m = map(int, input().split())
+    n, m = map(int, input().split())
     b = list()
-    c = []
-    d = []
+    c = list()
     n = int(input())
     n = n*2
     a = list(map(int, input().split()))
@@ -41,7 +40,5 @@ if __name__ == '__main__':
         b.append(a[i])
     for i in range(int(n/2), n):
         c.append(a[i])
-    # for i in range(0, int(n/2)):
-    #     print(b[i], end=' ')
     for i in range(int(n/2), int(n)):
         print(c[i], end=' ')

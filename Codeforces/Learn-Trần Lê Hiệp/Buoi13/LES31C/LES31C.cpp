@@ -8,7 +8,7 @@
 #define ii pair<int, int>
 const ll mod = 1e9 + 7;
 using namespace std;
-ll l, r, minn = 1e9;
+ll n, a[nmax], s = 0, mx = -1e18, mi = 1e18, mx2 = -1e18;
 int main()
 {
     ios::sync_with_stdio(0);
@@ -18,18 +18,36 @@ int main()
     freopen("LES31C.inp", "r", stdin);
     freopen("LES31C.out", "w", stdout);
 #endif // ONLINE_JUDGE
-    cin >> l >> r;
-    if (r - l >= 2018)
-        cout << 0;
-    else
+    cin >> n;
+    fo(i, 1, n)
     {
-        fo(i, l, r)
+        cin >> a[i];
+        mx = max(mx, a[i]);
+        mi = min(mi, a[i]);
+    }
+    fo(i, 1, n)
+    {
+        if (a[i] != mx)
+            mx2 = max(mx2, a[i]);
+        else
+            s++;
+    }
+    fo(i, 1, n)
+    {
+        if (mi == mx)
+            cout << mi;
+        else
         {
-            fo(j, i + 1, r)
+            if (a[i] != mx)
+                cout << mx;
+            else
             {
-                minn = min(minn, i * j % 2019);
+                if (s > 1)
+                    cout << mx;
+                else
+                    cout << mx2;
             }
         }
-        cout << minn;
+        cout << '\n';
     }
 }

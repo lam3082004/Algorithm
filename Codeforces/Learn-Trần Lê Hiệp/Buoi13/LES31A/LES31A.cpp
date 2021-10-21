@@ -7,8 +7,8 @@
 #define ii pair<int, int>
 const ll mod = 1e9 + 7;
 using namespace std;
-string s;
-ll dem = 0;
+int a, b, c;
+
 int main()
 {
     ios::sync_with_stdio(0);
@@ -18,17 +18,6 @@ int main()
     freopen("LES31A.inp", "r", stdin);
     freopen("LES31A.out", "w", stdout);
 #endif // ONLINE_JUDGE
-    cin >> s;
-    sort(s.begin(), s.end());
-    fo(i, 0, s.size() - 2)
-    {
-        if (s[i] != s[i + 1])
-        {
-            dem++;
-        }
-    }
-    if (dem == 1)
-        cout << "YES";
-    else
-        cout << "NO";
+    cin >> a >> b >> c;
+    cout << min(a * b, c);
 }
