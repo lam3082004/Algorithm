@@ -9,59 +9,41 @@
 #define ar array
 using namespace std;
 const int mod = 998244353;
-ll t, n, k, m, l['z' + 5];
-string a, b;
-bool ok;
+string s, p1 = "", p2 = "";
+int n, q, a, b, c;
 int main()
 {
 #ifndef ONLINE_JUDGE
-    freopen("new.inp", "r", stdin);
-    freopen("new.out", "w", stdout);
+    freopen("Equality.inp", "r", stdin);
+    freopen("Equality.out", "w", stdout);
 #endif // ONLINE_JUDGE
     ios::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
-    cin >> t;
-    while (t--)
+    cin >> n;
+    cin >> s;
+    fo(i, 0, n - 1) p1 += s[i];
+    fo(i, n, 2 * n - 1) p2 += s[i];
+    cin >> q;
+    while (q--)
     {
-        cin >> n >> k;
-        cin >> a >> b;
-        sort(a.rbegin(), a.rend());
-        sort(b.rbegin(), b.rend());
-        a = ' ' + a;
-        b = ' ' + b;
-        if (a == b)
+        cin >> a >> b >> c;
+        if (a == 1)
         {
-            cout << "Yes" << '\n';
-            continue;
+            swap(s[b - 1], s[c - 1]);
+            swap(p1[a - 1], p2[c - n - 1]);
         }
-        ok = 1;
-        fo(i, 1, n) if (a[i] > b[i])
-            ok = 0;
-        if (!ok)
-            cout << "No" << '\n';
         else
         {
-            fo(i, 'a', 'z')
-                l[i] = 0;
-            fo(i, 1, n)
-                l[a[i]]++;
-            fo(i, 1, n) if (l[b[i]] > 0)
-                l[b[i]]--;
-            fo(i, 'a', 'z') if (l[i] % k != 0)
-                ok = 0;
-            fo(i, 'a', 'z')
-                l[i] = 0;
-            fo(i, 1, n)
-                l[b[i]]++;
-            fo(i, 1, n) if (l[a[i]] > 0)
-                l[a[i]]--;
-            fo(i, 'a', 'z') if (l[i] % k != 0)
-                ok = 0;
-            if (ok)
-                cout << "Yes" << '\n';
-            else
-                cout << "No" << '\n';
+            s = "";
+            s += p2;
+            s += p1;
+            string p3 = p1, p4 = p2;
+            p1 = "";
+            p2 = "";
+            p1 += p4;
+            p2 += p3;
         }
     }
+    cout << s;
 }

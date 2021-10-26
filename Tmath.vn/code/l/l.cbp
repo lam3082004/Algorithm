@@ -32,6 +32,8 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="a.cpp" />
+		<Unit filename="l.inp" />
+		<Unit filename="l.out" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
