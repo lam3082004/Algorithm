@@ -8,6 +8,7 @@
 const ll mod = 1e9 + 7;
 using namespace std;
 ll n, id, a, b;
+ll gt[nmax], inv[nmax], kq;
 bool check(int x)
 {
     while (x > 0)
@@ -29,7 +30,6 @@ ll mu(ll a, ll b)
         tam = (tam * a) % mod;
     return tam;
 }
-int gt[nmax], inv[nmax], kq;
 int main()
 {
     ios::sync_with_stdio(0);
@@ -46,8 +46,7 @@ int main()
     for (ll i = 1000000 - 1; i >= 0; --i)
         inv[i] = (inv[i + 1] * (i + 1)) % mod;
     cin >> a >> b >> n;
-    for (int i = 0; i <= n; i++)
-        if (check(i * a + (n - i) * b))
-            kq = (kq + ((1LL * gt[n] * inv[i]) % mod * inv[n - i]) % mod) % mod;
+    fo(i, 0, n) if (check(i * a + (n - i) * b))
+        kq = (kq + ((gt[n] * inv[i]) % mod * inv[n - i]) % mod) % mod;
     cout << kq;
 }

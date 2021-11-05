@@ -1,26 +1,14 @@
 #include <bits/stdc++.h>
 #define ll long long
 #define fo(i, a, b) for (long long i = a; i <= b; i++)
-#define nmax 1005
+#define nmax 1000005
 #define fi first
 #define se second
 #define ii pair<int, int>
 const ll mod = 1e9 + 7;
 using namespace std;
-int n, m, x1, x2, xx, yy, x, y, k;
-int c[1005][1005], dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
-char a[1005][1005], ans[4] = {'U', 'R', 'D', 'L'};
-queue<ii> q;
-bool b[1005][1005];
 string s;
-void bfs(int i, int j)
-{
-    if (i <= 0 || i > n || j <= 0 || j > m || b[i][j] || a[i][j] == '#')
-        return;
-    q.push({i, j});
-    b[i][j] = 1;
-    c[i][j] = k;
-}
+ll a[nmax], b[nmax], c[nmax];
 int main()
 {
     ios::sync_with_stdio(0);
@@ -30,57 +18,35 @@ int main()
     freopen("LES33D.inp", "r", stdin);
     freopen("LES33D.out", "w", stdout);
 #endif // ONLINE_JUDGE
-    cin >> n >> m;
-    fo(i, 1, n)
+    cin >> s;
+    int n = s.size();
+    s = ' ' + s;
+    fo(i, 1, s.size())
     {
-        cin >> s;
-        fo(j, 0, m - 1)
+        if (s[i] == 'R')
         {
-            a[i][j + 1] = s[j];
-            if (a[i][j + 1] == 'A')
-            {
-                x1 = i;
-                x2 = j + 1;
-            }
-            if (a[i][j + 1] == 'B')
-            {
-                xx = i;
-                yy = j + 1;
-            }
+            if (s[i] == 'R')
+                a[i + 1] = a[i] + 1,
+                      a[i] = 0;
         }
     }
-    b[x1][x2] = 1;
-    q.push({x1, x2});
-    while (!q.empty())
+    for (ll i = n; i >= 1; i--)
     {
-        x = q.front().fi;
-        y = q.front().se;
-        q.pop();
-        k = 0;
-        while (k <= 3)
-        {
-            bfs(x + dx[k], y + dy[k]);
-            k++;
-        }
+        if (s[i] == 'L')
+            b[i - 1] = b[i] + 1,
+                  b[i] = 0;
     }
-    if (b[xx][yy] == 1)
+    int i = 1;
+    while (i <= n)
     {
-        cout << "YES" << '\n';
-        string s = "";
-        while (true)
+        if (a[i + 1] >= 1 && b[i] >= 1 || a[i] > 0 && b[i + 1] > 0)
         {
-            if (xx == x1 && yy == x2)
-                break;
-            int pos = c[xx][yy];
-            s += ans[pos];
-            xx -= dx[pos];
-            yy -= dy[pos];
+            c[i] = (a[i + 1] + 1) / 2 + b[i] / 2,
+            c[i + 1] = a[i + 1] / 2 + (b[i] + 1) / 2;
+            i += 2;
         }
-        cout << s.size() << '\n';
-        reverse(s.begin(), s.end());
-        for (auto i : s)
-            cout << i;
+        else
+            c[i] = 0, i++;
     }
-    else
-        cout << "NO";
+    fo(i, 1, n) cout << c[i] << ' ';
 }

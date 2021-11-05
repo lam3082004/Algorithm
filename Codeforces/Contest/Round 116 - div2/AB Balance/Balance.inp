@@ -1,0 +1,9 @@
+4
+b
+aabbbabaa
+abbb
+abbaab
+#ifndef ONLINE_JUDGE
+    freopen("Balance.inp", "r", stdin);
+    freopen("Balance.out", "w", stdout);
+#endif // ONLINE_JUDGE

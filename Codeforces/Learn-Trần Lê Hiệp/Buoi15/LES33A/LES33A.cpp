@@ -8,7 +8,7 @@
 const ll mod = 1e9 + 7;
 using namespace std;
 string s;
-ll dem = 0;
+ll n;
 int main()
 {
     ios::sync_with_stdio(0);
@@ -18,17 +18,16 @@ int main()
     freopen("LES33A.inp", "r", stdin);
     freopen("LES33A.out", "w", stdout);
 #endif // ONLINE_JUDGE
+    cin >> n;
     cin >> s;
-    sort(s.begin(), s.end());
-    fo(i, 0, s.size() - 2)
+    n %= 26;
+    fo(i, 0, s.size() - 1)
     {
-        if (s[i] != s[i + 1])
-        {
-            dem++;
-        }
+        if (s[i] - 'A' + 1 + n <= 26)
+            s[i] = s[i] + n;
+        else
+            s[i] = s[i] - (26 - n);
+        // cout << s[i] - 'A' + 1 << ' ';
     }
-    if (dem == 1)
-        cout << "YES";
-    else
-        cout << "NO";
+    fo(i, 0, s.size() - 1) cout << s[i];
 }

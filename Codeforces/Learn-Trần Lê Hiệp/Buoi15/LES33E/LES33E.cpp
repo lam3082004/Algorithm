@@ -1,23 +1,25 @@
 #include <bits/stdc++.h>
 #define ll long long
 #define fo(i, a, b) for (long long i = a; i <= b; i++)
-#define nmax 1005
+#define nmax 100005
 #define fi first
 #define se second
 #define ii pair<int, int>
 const ll mod = 1e9 + 7;
 using namespace std;
-int n, m, x, y, dem = 0;
-char a[1005][1005];
-bool check[1005][1005];
-queue<ii> q;
-string s;
-void bfs(int i, int j)
+ll n, a[nmax], dp[nmax], b[nmax];
+inline int cal(int x)
 {
-    if (i <= 0 || i > n || j <= 0 || j > m || check[i][j] || a[i][j] == '#')
-        return;
-    q.push({i, j});
-    check[i][j] = 1;
+    if (x > 3)
+        return 0;
+    if (x == 0)
+        return 0;
+    if (x == 1)
+        return 3;
+    if (x == 2)
+        return 6;
+    if (x == 3)
+        return 6;
 }
 int main()
 {
@@ -28,33 +30,28 @@ int main()
     freopen("LES33E.inp", "r", stdin);
     freopen("LES33E.out", "w", stdout);
 #endif // ONLINE_JUDGE
-    cin >> n >> m;
+    cin >> n;
+    fo(i, 1, n) cin >> a[i];
+    dp[0] = 1;
     fo(i, 1, n)
     {
-        cin >> s;
-        fo(j, 0, m - 1) a[i][j + 1] = s[j];
-    }
-    fo(i, 1, n)
-    {
-        fo(j, 1, m)
+        if (a[i] == 0)
+            dp[i] = dp[i - 1];
+        else
         {
-            if (a[i][j] == '.' && check[i][j] == false)
-            {
-                dem++;
-                q.push({i, j});
-                check[i][j] = 1;
-                while (!q.empty())
-                {
-                    x = q.front().fi;
-                    y = q.front().se;
-                    q.pop();
-                    bfs(x + 1, y);
-                    bfs(x, y + 1);
-                    bfs(x - 1, y);
-                    bfs(x, y - 1);
-                }
-            }
+            dp[i] = b[a[i] - 1] * dp[i - 1] % mod;
+            b[a[i] - 1]--;
         }
+        b[a[i]]++;
     }
-    cout << dem;
+    b[0] = 0;
+    for (int i = 1; i <= n; ++i)
+        b[a[i]]++;
+    ll k = dp[n];
+    if (b[0] == 2 || b[0] == 3)
+        cout << 6 * k % mod;
+    else if (b[0] == 1)
+        cout << 3 * k % mod;
+    else
+        cout << 0 * k;
 }

@@ -19,16 +19,10 @@ int main()
     freopen("LES34A.out", "w", stdout);
 #endif // ONLINE_JUDGE
     cin >> s;
-    sort(s.begin(), s.end());
-    fo(i, 0, s.size() - 2)
-    {
-        if (s[i] != s[i + 1])
-        {
-            dem++;
-        }
-    }
-    if (dem == 1)
-        cout << "YES";
-    else
-        cout << "NO";
+    string t = s;
+    reverse(s.begin(), s.end());
+    fo(i, 0, s.size()) if (s[i] != t[i])
+        dem++;
+    // cout << s << " " << t;
+    cout << dem / 2;
 }

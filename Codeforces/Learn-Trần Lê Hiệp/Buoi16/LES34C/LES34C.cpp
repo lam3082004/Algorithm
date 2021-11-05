@@ -8,7 +8,36 @@
 #define ii pair<int, int>
 const ll mod = 1e9 + 7;
 using namespace std;
-ll l, r, minn = 1e9;
+int ans = 0, n;
+int a[20], x[20][20], y[20][20];
+int type[20];
+void Try(int i)
+{
+    if (i == n + 1)
+    {
+        int cnt = 0;
+        for (int t = 1; t <= n; ++t)
+        {
+            if (type[t] == 1)
+            {
+                for (int j = 1; j <= a[t]; ++j)
+                {
+                    if (type[x[t][j]] != y[t][j])
+                        return;
+                    type[x[t][j]] = y[t][j];
+                }
+                cnt++;
+            }
+        }
+        ans = max(ans, cnt);
+        return;
+    }
+    for (int j = 0; j < 2; ++j)
+    {
+        type[i] = j;
+        Try(i + 1);
+    }
+}
 int main()
 {
     ios::sync_with_stdio(0);
@@ -18,18 +47,14 @@ int main()
     freopen("LES34C.inp", "r", stdin);
     freopen("LES34C.out", "w", stdout);
 #endif // ONLINE_JUDGE
-    cin >> l >> r;
-    if (r - l >= 2018)
-        cout << 0;
-    else
+    cin >> n;
+    for (int i = 1; i <= n; ++i)
     {
-        fo(i, l, r)
-        {
-            fo(j, i + 1, r)
-            {
-                minn = min(minn, i * j % 2019);
-            }
-        }
-        cout << minn;
+        cin >> a[i];
+        for (int j = 1; j <= a[i]; ++j)
+            cin >> x[i][j] >> y[i][j];
     }
+    ans = 0;
+    Try(1);
+    cout << ans;
 }

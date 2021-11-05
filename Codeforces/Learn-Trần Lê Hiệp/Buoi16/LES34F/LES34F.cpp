@@ -1,44 +1,67 @@
 #include <bits/stdc++.h>
-#define ll long long
-#define fo(i, a, b) for (long long i = a; i <= b; i++)
-#define nmax 1000005
-#define fi first
-#define se second
-#define ii pair<int, int>
-const ll mod = 1e9 + 7;
+#define TASK "1167F"
+#define LL long long
+#define eb emplace_back
 using namespace std;
-ll a, b;
-ll gt(ll x)
+const int mod = 1e9 + 7;
+const int maxn = 5e5 + 5;
+int n, a[maxn], BIT[maxn + 5], b[maxn];
+vector<int> RR;
+///-------------------------
+void update(int i, int val)
 {
-    ll s = 1;
-    fo(i, 1, x)
-        s = (s * i) % mod;
-    return s;
+    if (i > maxn)
+        return;
+    BIT[i] = (BIT[i] + val) % mod;
+    update(i + (-i & i), val);
 }
-ll mu(ll a, ll b)
+///-------------------------
+int get(int i)
 {
-    if (b == 0)
-        return 1;
-    ll tam = mu(a, b / 2);
-    tam = (tam * tam) % mod;
-    if (b % 2 == 1)
-        tam = (tam * a) % mod;
-    return tam;
+    if (i <= 0)
+        return 0;
+    int tmp = (BIT[i] + get(i - (-i & i))) % mod;
+    return tmp;
 }
+///-------------------------
+int tiny(int k)
+{
+    return upper_bound(RR.begin(), RR.end(), k) - RR.begin();
+}
+///-------------------------
+void solve()
+{
+    scanf("%d", &n);
+    for (int i = 1; i <= n; ++i)
+        scanf("%d", &a[i]);
+    int ans = 0, pro = 0;
+    for (int i = 1; i <= n; ++i)
+        ans = (ans + 1LL * (1LL * a[i] * i % mod) * (n - i + 1)) % mod;
+    for (int i = 1; i <= n; ++i)
+        RR.eb(a[i]);
+    sort(RR.begin(), RR.end());
+    for (int i = 1; i <= n; ++i)
+        b[i] = tiny(a[i]) + 1;
+    for (int i = 1; i <= n; ++i)
+    {
+        pro = (pro + 1LL * (1LL * a[i] * (n - i + 1) % mod) * get(b[i] - 1)) % mod;
+        update(b[i], i);
+    }
+    memset(BIT, 0, sizeof(BIT));
+    for (int i = n; i > 0; --i)
+    {
+        pro = (pro + 1LL * (1LL * a[i] * i % mod) * get(b[i] - 1)) % mod;
+        update(b[i], n - i + 1);
+    }
+    ans = (ans + pro) % mod;
+    printf("%d\n", ans);
+}
+///-------------------------
 int main()
 {
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    cout.tie(0);
-#ifndef ONLINE_JUDGE
-    freopen("LES34F.inp", "r", stdin);
-    freopen("LES34F.out", "w", stdout);
-#endif // ONLINE_JUDGE
-    cin >> a >> b;
-    ll k = b;
-    ll n = a + b - 1;
-    ll x = gt(n) % mod;
-    ll y = mu(gt(k), mod - 2) % mod;
-    ll z = mu(gt(n - k), mod - 2) % mod;
-    cout << (((x * y) % mod) * z) % mod;
+#ifdef TLH2203
+    freopen(TASK ".inp", "r", stdin);
+    freopen(TASK ".out", "w", stdout);
+#endif // TLH2203
+    solve();
 }
