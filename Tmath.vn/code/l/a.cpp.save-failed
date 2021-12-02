@@ -1,0 +1,38 @@
+#include <bits/stdc++.h>
+#define ll long long
+#define fo(i, a, b) for (int i = a; i <= b; i++)
+#define nmax 1005
+#define fi first
+#define se second
+#define ii pair<int, int>
+const ll mod = 1e9 + 7;
+using namespace std;
+ll a, b, maxx = 1;
+
+ll cs(ll n)
+{
+    ll s=0;
+    while(n>0)
+    {
+        s+=n%10;
+        n/=10;
+    }
+    return s;
+}
+int main()
+{
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+#ifndef ONLINE_JUDGE
+    freopen("l.inp", "r", stdin);
+    freopen("l.out", "w", stdout);
+#endif // ONLINE_JUDGE
+    cin >> a >> b;
+    fo(i,1,int(sqrt(1000000000)) + 5)
+    {
+        if(a%i == 0 && b%i == 0)
+            maxx = max(maxx, cs(i));
+    }
+    cout << maxx;
+}

@@ -1,52 +1,41 @@
 #include <bits/stdc++.h>
 #define ll long long
-#define fo(i, a, b) for (ll i = a; i <= b; i++)
-#define nmax 1000005
-#define fi first
-#define se second
-#define ii pair<int, int>
+using namespace std;
 const ll mod = 1e9 + 7;
 using namespace std;
-ll n, id, a, b;
-ll gt[nmax], inv[nmax], kq;
-bool check(int x)
-{
-    while (x > 0)
-    {
-        int s = x % 10;
-        if (s != a && s != b)
-            return false;
-        x /= 10;
-    }
-    return true;
-}
-ll mu(ll a, ll b)
+ll a, b, n, res;
+ll gt[1000005];
+ll Pow(ll a, ll b)
 {
     if (b == 0)
         return 1;
-    ll tam = mu(a, b / 2);
-    tam = (tam * tam) % mod;
-    if (b % 2 == 1)
-        tam = (tam * a) % mod;
-    return tam;
+    ll t = Pow(a, b / 2);
+    if (b % 2)
+        return t * t % mod * a % mod;
+    return t * t % mod;
+}
+bool check(ll i)
+{
+    while (i > 0)
+    {
+        if (i % 10 != a && i % 10 != b)
+            return 0;
+        i /= 10;
+    }
+    return 1;
 }
 int main()
 {
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    cout.tie(0);
 #ifndef ONLINE_JUDGE
-    freopen("a.inp", "r", stdin);
-    freopen("a.out", "w", stdout);
+    freopen("l.inp", "r", stdin);
+    freopen("l.out", "w", stdout);
 #endif // ONLINE_JUDGE
-    gt[0] = 1;
-    fo(i, 1, 1000000)
-        gt[i] = (gt[i - 1] * i) % mod;
-    inv[1000000] = mu(gt[1000000], mod - 2);
-    for (ll i = 1000000 - 1; i >= 0; --i)
-        inv[i] = (inv[i + 1] * (i + 1)) % mod;
     cin >> a >> b >> n;
-    fo(i, 0, n) if (check(i * a + (n - i) * b))
-        kq = (kq + ((gt[n] * inv[i]) % mod * inv[n - i]) % mod) % mod;
-    cout << kq;
+    gt[0] = 1;
+    for (int i = 1; i <= 1e6; i++)
+        gt[i] = gt[i - 1] * i % mod;
+    for (int i = 0; i <= n; i++)
+        if (check(i * a + (n - i) * b))
+            res = (res + gt[n] * Pow(gt[i], mod - 2) % mod * Pow(gt[n - i], mod - 2) % mod) % mod;
+    cout << res;
 }
